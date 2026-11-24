@@ -1,9 +1,15 @@
 db.sqlite3
 .env
+.env.*
+!.env.example
 media/
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-/staticfiles/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+staticfiles/
 testing_files/
