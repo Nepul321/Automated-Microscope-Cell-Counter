@@ -31,6 +31,18 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Media uploads
+
+Uploaded files are stored under the project-level `media/` directory and served
+at `/media/` while `DEBUG=True`. The directory is excluded from version control.
+For an upload model, use a Django `FileField` or `ImageField` with an `upload_to`
+path; HTML upload forms must use `enctype="multipart/form-data"` and views must
+read files from `request.FILES`.
+
+The development server's media serving is not suitable for production. Configure
+production storage and web-server or object-storage delivery before accepting
+uploads in a deployed environment.
+
 ## Roadmap
 
 - [ ] Implement image upload API

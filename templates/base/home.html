@@ -1,0 +1,97 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}Cell Counter | Microscopy analysis{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'base/css/home.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+
+{% block body %}
+<main class="home-shell">
+  <div class="container home-content">
+    <div class="row align-items-end g-4 mb-5">
+      <div class="col-lg-9">
+        <div class="eyebrow"><span class="eyebrow-mark"></span>Microscopy, made measurable</div>
+        <h1 class="hero-title">A clearer view of <span>every cell.</span></h1>
+        <p class="hero-copy mb-0">
+          Upload a microscopy image to get started. Cell Counter is built to make image-based cell analysis
+          more approachable, consistent, and easy to explore.
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-7">
+        <section class="upload-card h-100" aria-labelledby="upload-heading">
+          <div class="upload-card-header d-flex align-items-center gap-3">
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"></path>
+                <path d="M5 14.5v4A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-4"></path>
+              </svg>
+            </span>
+            <div>
+              <h2 class="h5 fw-bold mb-1" id="upload-heading">Start with an image</h2>
+              <p class="upload-hint mb-0">Choose a clear microscope image from your device.</p>
+            </div>
+          </div>
+
+          <div class="upload-card-body">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+              {% endif %}
+              <div class="mb-4">
+                <label class="upload-label d-block mb-2" for="{{ form.uploaded_image.id_for_label }}">Microscopy image</label>
+                {{ form.uploaded_image }}
+                {% if form.uploaded_image.errors %}
+                  <div class="invalid-feedback d-block">{{ form.uploaded_image.errors }}</div>
+                {% endif %}
+                <div class="upload-hint mt-2">Accepted formats: JPG, PNG, TIFF</div>
+              </div>
+                  {% if cell_image %}
+                    <div class="alert alert-success" role="status">
+                      Analysis complete: <strong>{{ cell_image.cell_count }}</strong> cells detected
+                      in {{ cell_image.processing_time_ms }} ms.
+                      <a href="{{ cell_image.processed_image.url }}" class="alert-link" target="_blank">
+                        View processed image
+                      </a>
+                    </div>
+                  {% endif %}
+              <button class="btn primary-action w-100" type="submit">
+                Continue to analysis
+                <span aria-hidden="true" class="ms-1">&rarr;</span>
+              </button>
+              <p class="privacy-note text-center mt-3 mb-0">For research and educational use. Not for clinical diagnosis.</p>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-5">
+        <aside class="process-panel" aria-labelledby="process-heading">
+          <div class="panel-label">Your workflow</div>
+          <h2 id="process-heading">From slide to insight.</h2>
+          <p>Prepare an image and explore the building blocks of automated cell analysis.</p>
+          <ol class="process-list">
+            <li>
+              <span class="step-number">01</span>
+              <span><strong>Upload an image</strong><span>Start with a JPG, PNG, or TIFF microscopy image.</span></span>
+            </li>
+            <li>
+              <span class="step-number">02</span>
+              <span><strong>Inspect the sample</strong><span>Review image details before continuing.</span></span>
+            </li>
+            <li>
+              <span class="step-number">03</span>
+              <span><strong>Explore cell analysis</strong><span>Build toward clearer, more measurable results.</span></span>
+            </li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock body %}

@@ -1,0 +1,57 @@
+:root {
+  --ink: #142c38;
+  --muted: #647781;
+  --teal: #168b83;
+  --teal-dark: #0e706c;
+  --canvas: #f3f7f6;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.app-navbar {
+  background: #fff;
+  border-bottom: 1px solid #e3ebe9;
+  box-shadow: 0 4px 18px rgba(24, 55, 62, .04);
+  padding: .8rem 0;
+}
+
+.app-navbar .navbar-brand {
+  color: var(--ink);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+
+.app-navbar .navbar-brand:hover,
+.app-navbar .navbar-brand:focus {
+  color: var(--teal-dark);
+}
+
+.app-navbar .nav-link {
+  border-radius: .55rem;
+  color: var(--muted);
+  font-size: .92rem;
+  font-weight: 600;
+  margin-left: .25rem;
+  padding: .55rem .8rem;
+  transition: background-color .18s ease, color .18s ease;
+}
+
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link:focus {
+  background: #e7f5f2;
+  color: var(--teal-dark);
+}
+
+.app-navbar .navbar-toggler {
+  border-color: #d7e5e2;
+}
+
+.app-navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 .2rem rgba(22, 139, 131, .14);
+}
