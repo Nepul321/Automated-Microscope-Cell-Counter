@@ -38,6 +38,16 @@
           </div>
 
           <div class="upload-card-body">
+            {% if not user.is_authenticated %}
+            <div class="text-center py-3">
+              <h3 class="h5 fw-bold">Sign in to analyze an image</h3>
+              <p class="upload-hint mb-4">Image uploads and analysis are available to logged-in users.</p>
+              <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a class="btn primary-action" href="{% url 'account:login' %}?next={{ request.path|urlencode }}">Log in</a>
+                <a class="btn primary-action" href="{% url 'account:sign_up' %}">Create account</a>
+              </div>
+            </div>
+            {% else %}
             <form method="post" enctype="multipart/form-data">
               {% csrf_token %}
               {% if form.non_field_errors %}
@@ -66,6 +76,7 @@
               </button>
               <p class="privacy-note text-center mt-3 mb-0">For research and educational use. Not for clinical diagnosis.</p>
             </form>
+            {% endif %}
           </div>
         </section>
       </div>

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
+from django.urls import reverse
 from .forms import CellImageForm
 from .models import CellImage
 
@@ -9,7 +11,7 @@ def HomeView(request, *args, **kwargs):
 
     if request.method == "POST":
         if not request.user.is_authenticated:
-            form.add_error(None, "Please sign in before uploading an image.")
+            return redirect(f"{reverse('account:login')}?next={reverse('home')}")
         elif form.is_valid():
             try:
                 cell_image = CellImage.objects.create(

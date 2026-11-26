@@ -1,0 +1,19 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ title }} | Cell Counter{% endblock title %}
+
+{% block body %}
+<main class="container py-5" style="max-width: 620px;">
+  <section class="bg-white border rounded-4 shadow-sm p-4 p-md-5">
+    <h1 class="h3 fw-bold mb-3">{{ title }}</h1>
+    <p class="text-secondary mb-4">{{ message }}</p>
+    {% if diagnostic %}
+      <p class="text-secondary small">Development diagnostic: {{ diagnostic }}</p>
+    {% endif %}
+    {% if action_url %}
+      <a class="btn btn-success me-2" href="{{ action_url }}">{{ action_label }}</a>
+    {% endif %}
+    <a class="btn btn-success" href="{% url 'home' %}">Return to Cell Counter</a>
+  </section>
+</main>
+{% endblock body %}

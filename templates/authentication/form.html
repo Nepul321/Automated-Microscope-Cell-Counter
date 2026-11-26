@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ title }} | Cell Counter{% endblock title %}
+
+{% block body %}
+<main class="container py-5" style="max-width: 620px;">
+  <section class="bg-white border rounded-4 shadow-sm p-4 p-md-5">
+    <h1 class="h3 fw-bold mb-2">{{ title }}</h1>
+    {% if description %}<p class="text-secondary mb-4">{{ description }}</p>{% endif %}
+    <form method="post">
+      {% csrf_token %}
+      {% if request.GET.next or request.POST.next %}
+        <input type="hidden" name="next" value="{{ request.POST.next|default:request.GET.next }}">
+      {% endif %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}
+            <div class="text-danger small mt-1">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button class="btn btn-success w-100 mt-2" type="submit">{{ submit_label }}</button>
+    </form>
+    <div class="mt-4 small">
+      {% if request.resolver_match.url_name == 'login' %}
+        <a href="{% url 'account:forgot_password' %}">Forgot your password?</a>
+        <span class="text-secondary mx-1">·</span>
+        <a href="{% url 'account:sign_up' %}">Create an account</a>
+      {% elif request.resolver_match.url_name == 'sign_up' %}
+        <a href="{% url 'account:login' %}">Already have an account? Log in</a>
+      {% elif request.resolver_match.url_name == 'account_information' %}
+        <a href="{% url 'account:change_password' %}">Change password</a>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock body %}

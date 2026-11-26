@@ -18,9 +18,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from authentication.views import password_reset_confirm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(
+        'r/<uidb64>/<token>/',
+        password_reset_confirm,
+        name='password_reset_confirm_short',
+    ),
+    path('api/auth/', include('authentication.api.urls')),
+    path('accounts/', include('authentication.urls')),
     path('', include("base.urls")),
 ]
 
